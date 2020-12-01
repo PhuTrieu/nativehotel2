@@ -33,7 +33,7 @@ export default class ItemSlick extends Component {
     }
 
     loadPriceRoomTypes(id){
-        axios.get('http://nativehotel2.herokuapp.com/api/room_type_rate/'+id).then( response => {
+        axios.get('https://nativehotel2.herokuapp.com/api/room_type_rate/'+id).then( response => {
             this.setState({
                 giaLP: response.data
             },()=>{
@@ -42,31 +42,31 @@ export default class ItemSlick extends Component {
         });
     }
 
-    addItemInShoppingCart(){
-        var obj = {
-            name: 'Hate',
-            sl: 1
-        };
-        this.props.onAddItemInShoppingCart(obj.sl);
+    // addItemInShoppingCart(){
+    //     var obj = {
+    //         name: 'Hate',
+    //         sl: 1
+    //     };
+    //     this.props.onAddItemInShoppingCart(obj.sl);
 
-        // Nếu KH vào lại trang -> giỏ vẫn còn
-        if(localStorage.getItem('itemsShoppingCart')==null){
-            var arrItems = [];
-            arrItems.push(obj);
-            localStorage.setItem('itemsShoppingCart', JSON.stringify(arrItems));
-            localStorage.setItem('slItemsShoppingCart', JSON.stringify(obj.sl));
-        } else {
-            var arrItems = JSON.parse(localStorage.getItem('itemsShoppingCart'));
-            arrItems.push(obj);
-            var sl = parseInt(localStorage.getItem('slItemsShoppingCart'),10) + obj.sl;
-            localStorage.setItem('itemsShoppingCart', JSON.stringify(arrItems));
-            localStorage.setItem('slItemsShoppingCart', JSON.stringify(sl));
-        }
+    //     // Nếu KH vào lại trang -> giỏ vẫn còn
+    //     if(localStorage.getItem('itemsShoppingCart')==null){
+    //         var arrItems = [];
+    //         arrItems.push(obj);
+    //         localStorage.setItem('itemsShoppingCart', JSON.stringify(arrItems));
+    //         localStorage.setItem('slItemsShoppingCart', JSON.stringify(obj.sl));
+    //     } else {
+    //         var arrItems = JSON.parse(localStorage.getItem('itemsShoppingCart'));
+    //         arrItems.push(obj);
+    //         var sl = parseInt(localStorage.getItem('slItemsShoppingCart'),10) + obj.sl;
+    //         localStorage.setItem('itemsShoppingCart', JSON.stringify(arrItems));
+    //         localStorage.setItem('slItemsShoppingCart', JSON.stringify(sl));
+    //     }
 
-        var items = JSON.parse(localStorage.getItem('itemsShoppingCart'));
-        var sl = parseInt(localStorage.getItem('slItemsShoppingCart'),10);
-        console.log('in LS: ', items, sl);
-    }
+    //     var items = JSON.parse(localStorage.getItem('itemsShoppingCart'));
+    //     var sl = parseInt(localStorage.getItem('slItemsShoppingCart'),10);
+    //     console.log('in LS: ', items, sl);
+    // }
 
     render() {
         return (

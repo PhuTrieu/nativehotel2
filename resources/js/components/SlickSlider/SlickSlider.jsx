@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Slider from "react-slick";
 import axios from 'axios';
-import AOS from 'aos';
-import 'aos/dist/aos.css'; 
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -16,7 +14,7 @@ export default class SlickSlider extends Component {
       }
       this.loadRoomTypes=this.loadRoomTypes.bind(this);
       this.showItems = this.showItems.bind(this);
-      this.addItemInShoppingCart = this.addItemInShoppingCart.bind(this);
+      // this.addItemInShoppingCart = this.addItemInShoppingCart.bind(this);
   }
   
   componentWillMount(){
@@ -24,17 +22,17 @@ export default class SlickSlider extends Component {
   }
 
   loadRoomTypes(){
-    axios.get('http://nativehotel2.herokuapp.com/api/room_types').then( response => {
+    axios.get('https://nativehotel2.herokuapp.com/api/room_types').then( response => {
         this.setState({
             roomTypes: response.data
         })
     });
   }
 
-  addItemInShoppingCart(sl){
-    // console.log(obj, ' in SlickSlider');
-    this.props.onAddItemInShoppingCart(sl);
-  }
+  // addItemInShoppingCart(sl){
+  //   // console.log(obj, ' in SlickSlider');
+  //   this.props.onAddItemInShoppingCart(sl);
+  // }
 
   showItems(){
     console.log(this.state.roomTypes);
@@ -46,7 +44,7 @@ export default class SlickSlider extends Component {
         hinhAnh  = {item.hinhAnh}
         moTa = {JSON.parse(item.moTa)}
         slPhongTrong = {item.slPhongTrong}
-        onAddItemInShoppingCart = { this.addItemInShoppingCart }
+        // onAddItemInShoppingCart = { this.addItemInShoppingCart }
       />
     );
     return lst;
@@ -81,14 +79,15 @@ export default class SlickSlider extends Component {
         ]
       };
       
-      AOS.init();
       var aos_left = {
         'data-aos': "fade-left",
-        'data-aos-offset': "500",
+        'data-aos-offset': "450",
         'data-aos-duration': "700"
       };
       return (
-        <div  className="container" style={{ marginTop: '8vh', marginBottom: '6vh' }}>
+        <div
+          className="container goToSlickSlider" style={{ marginTop: '8vh', marginBottom: '6vh' }}
+        >
           <h1><b>Find your Native room.</b></h1>
           <p style={{fontSize:'1.2vw', marginBottom: '3vh' }}>We all have favourites, and that's ok. From a West End studio to a slick City penthouse, find your perfect pad.</p>
           <div { ...aos_left }>

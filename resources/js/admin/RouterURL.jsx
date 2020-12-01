@@ -35,6 +35,7 @@ import OwnAccount from './components/myOwnAccount/OwnAccountForm';
 export default class RouterURL extends Component {
     render() {
         return (
+            <React.StrictMode>
             <Router>
                 <div>
                     <Route exact path="/admin" component={ Login }/>
@@ -67,6 +68,7 @@ export default class RouterURL extends Component {
                     <Route exact path="/admin/add_admin_account" component={ AddAdminAccount }/>
                 </div>
             </Router>
+            </React.StrictMode>
         )
     }
 }

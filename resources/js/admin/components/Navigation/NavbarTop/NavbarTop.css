@@ -22,3 +22,6 @@
   position: relative;
   top: -3px;
 }
+.nav-admin-control a:hover{
+     color: black;
+}

@@ -68,7 +68,7 @@ class NavbarTop extends Component {
                         <div className="text-center"><Link className="navbar-brand text-light" to="/admin/home"><b style={{fontSize: "25px"}}>NATIVE Hotel Booking Online</b></Link></div>
                     </Nav>
                     <Nav navbar>
-                        <Dropdown  isOpen={this.state.dropdownOpen} toggle={this.toggleAcc}>
+                        <Dropdown className="nav-admin-control" isOpen={this.state.dropdownOpen} toggle={this.toggleAcc}>
                             <DropdownToggle caret>
                                 <RiEmotionLine fontSize="20px" color="white"/><b className="text-light"> {this.state.username}</b>
                             </DropdownToggle>

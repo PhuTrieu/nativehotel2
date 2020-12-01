@@ -48,7 +48,6 @@ export default class RouterURL extends Component {
                     <Route exact path="/admin/add_customer" component={ AddCustomer }/>
                     
                     <Route exact path="/admin/admin_accounts" component={ AdminAccounts }/>
-                    <Route exact path="/admin/slides" component={ Slides }/>
                     <Route exact path="/admin/booking" component={ Booking }/>
 
                     <Route exact path="/admin/rates" component={ Rates }/>

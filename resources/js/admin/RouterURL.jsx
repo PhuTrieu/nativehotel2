@@ -4,7 +4,7 @@ import {
     Route,
 } from "react-router-dom";
 
-import Home from "./components/Home/Home";
+const Home = lazy(() => import("./components/Home/Home"));
 
 const Customers = lazy(() => import("./components/Customers/Customers"));
 const CustomerForm = lazy(() => import('./components/Customers/FormCustomer/FromCustomer'));

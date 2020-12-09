@@ -449,7 +449,7 @@ var BookingInfo = /*#__PURE__*/function (_Component) {
         var checkEmail = {
           email: _this3.state.email
         };
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://127.0.0.1:8000/api/exist_mail', checkEmail).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://nativehotel2.herokuapp.com/api/exist_mail', checkEmail).then(function (res) {
           if (res.data) {
             var id = JSON.parse(localStorage.getItem('itemsShoppingCart'))[0].idLP;
             axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('https://nativehotel2.herokuapp.com/api/room_types/' + id).then(function (res) {
@@ -479,7 +479,7 @@ var BookingInfo = /*#__PURE__*/function (_Component) {
                         ngayHetHan: _this3.state.ngayHetHan != null ? Object(date_fns__WEBPACK_IMPORTED_MODULE_6__["format"])(new Date(_this3.state.ngayHetHan), 'yyyy-MM-dd') : null
                       };
                       console.log(customer);
-                      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://127.0.0.1:8000/api/customer', customer).then(function (res) {
+                      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://nativehotel2.herokuapp.com/api/customer', customer).then(function (res) {
                         if (res.data != null) {
                           customer = {
                             idKH: res.data.idKH
@@ -493,7 +493,7 @@ var BookingInfo = /*#__PURE__*/function (_Component) {
                             tongTien: parseInt(_this3.state.giaLP, 10) * _this3.state.diff
                           };
                           console.log(booking);
-                          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://127.0.0.1:8000/api/bookings', booking).then(function (res) {
+                          axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://nativehotel2.herokuapp.com/api/bookings', booking).then(function (res) {
                             if (res.data != null) {
                               //tao var data_obj de gui qua api sendmail de lay data lam form de gui mail cho kh
                               booking = {
@@ -513,7 +513,7 @@ var BookingInfo = /*#__PURE__*/function (_Component) {
                                 ngayDi: Object(date_fns__WEBPACK_IMPORTED_MODULE_6__["format"])(_this3.state.endDate, 'dd/MM/yyyy'),
                                 tongTien: new Intl.NumberFormat().format(parseInt(_this3.state.giaLP, 10) * _this3.state.diff)
                               };
-                              axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://127.0.0.1:8000/api/send_mail', data_obj).then(function (res) {
+                              axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://nativehotel2.herokuapp.com/api/send_mail', data_obj).then(function (res) {
                                 if (res.data == true) {
                                   _this3.notify();
 

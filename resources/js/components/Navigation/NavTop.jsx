@@ -12,12 +12,11 @@ import {
     Row,
     Col,
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { CgShoppingCart } from 'react-icons/cg';
 import {  RiPhoneLine } from 'react-icons/ri';
 import './NavTop.css';
 import { format } from 'date-fns';
-import { ImCancelCircle } from 'react-icons/im';
 
 export default class NavTop extends Component {
     constructor(props) {
@@ -29,6 +28,7 @@ export default class NavTop extends Component {
             dropdownOpen: false,
 
             toggleCart: false,
+            isGoToCartPage: false
         };
         this.toggleRooms = this.toggleRooms.bind(this); 
         this.loadRoomTypes = this.loadRoomTypes.bind(this);
@@ -94,44 +94,26 @@ export default class NavTop extends Component {
         if(localStorage.getItem('itemsShoppingCart')){
             var diff = JSON.parse(localStorage.getItem('dateArriveCart')).days_diff;
             var startDate = format(new Date(JSON.parse(localStorage.getItem('dateArriveCart')).startDate), 'dd/MM/yyyy');
-            var room = JSON.parse(localStorage.getItem('itemsShoppingCart'))[0];
-            const deleteItemsLocalStorage = ()=>{
-                localStorage.removeItem('itemsShoppingCart');
-                localStorage.removeItem('slItemsShoppingCart');
-                this.setState({
-                    slItemAddCart: 0
-                }, ()=>{console.log('sl sau khi rm: ', this.state.slItemAddCart)});
-            }
+            var room = JSON.parse(localStorage.getItem('itemsShoppingCart'));
+            const showRooms = room.map((item,index) => 
+                <Row key={ index } style={{ lineHeight: '43px' }}>
+                    <Col>{ item.tenLP }</Col>
+                    <Col>{ item.giaLP }</Col>
+                </Row>
+            );
             return (
                 <DropdownMenu>
                     <DropdownItem className="text-center" disabled>{ diff } nights from { startDate }</DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem text="true">
-                        <Row style={{ lineHeight: '43px' }}>
-                            <Col>{ room.tenLP }</Col>
-                            <Col>{ room.giaLP }</Col>
-                            <Col>
-                                <Button 
-                                    outline color="red" 
-                                    className="btn-add icon-top"
-                                    style={{padding: 0}} 
-                                    onClick={ deleteItemsLocalStorage }
-                                >
-                                    <ImCancelCircle style={{fontSize: '3vh'}} color="black" className="icon-top" />
-                                </Button>
-                            </Col>
-                        </Row>
+                        { showRooms }
                     </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem text="true">
-                        <Row>
-                            <Col><b>Total (inc tax)</b></Col>
-                            <Col><b>{ parseInt(room.giaLP,10) } VND</b></Col>
-                        </Row>
-                    </DropdownItem>
-                    <DropdownItem text="true">
                         <Row className="button-GoBasket">
-                            <Button color="dark" style={{marginLeft: '7vw'}}><b>Go BASKET</b></Button>
+                            <Button color="dark" style={{marginLeft: '7vw'}} 
+                                onClick={ ()=>{ this.setState({ isGoToCartPage: !this.state.isGoToCartPage }); } }
+                            ><b>Go BASKET</b></Button>
                         </Row>
                     </DropdownItem>
                 </DropdownMenu>
@@ -141,6 +123,11 @@ export default class NavTop extends Component {
     }
 
     render() {
+        if(this.state.isGoToCartPage){
+            return (
+                <Redirect to="/your_basket" />
+            );
+        }
         return (
             <div className="nav-on-top">
                 {/* className="justify-content-center" */}

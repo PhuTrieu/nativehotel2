@@ -26,7 +26,7 @@ export default class AddRates extends Component {
         this.state={
             giaLP: '',
             timeApDung: '',
-            idLP: 2,
+            idLP: '',
 
             roomType:[],
             tooltipOpen: false
@@ -77,13 +77,14 @@ export default class AddRates extends Component {
 
     saveChange(e){
         e.preventDefault();
-        var rates = {
-            giaLP: this.state.giaLP,
-            timeApDung: this.state.timeApDung,
-            idLP: this.state.idLP
+        if (this.state.idLP != '') {
+            var rates = {
+                giaLP: this.state.giaLP,
+                timeApDung: this.state.timeApDung,
+                idLP: this.state.idLP
+            }
+            rates.idLP = parseInt(rates.idLP);
         }
-        rates.idLP = parseInt(rates.idLP);
-
         const Zoom = cssTransition({
             enter: 'zoomIn',
             exit: 'zoomOut',

@@ -6,14 +6,15 @@ import { format, differenceInDays } from 'date-fns';
 
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { IoIosBed } from "react-icons/io";
-import { FaBath, FaHotel, FaRegHandshake, FaRegSadCry, FaRegSadTear } from "react-icons/fa";
+import { FaBath, FaHotel, FaRegHandshake, FaRegSadCry } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { AiOutlineCheck, AiFillQuestionCircle, AiOutlineWifi, AiFillCheckCircle } from "react-icons/ai";
+import { AiOutlineCheck, AiFillQuestionCircle, AiOutlineWifi } from "react-icons/ai";
 import { SiClockify } from "react-icons/si";
 import { BsBucket } from "react-icons/bs";
 import { GrObjectUngroup } from "react-icons/gr";
 import { GiPerfumeBottle } from "react-icons/gi";
 import { CgSmartHomeWashMachine } from "react-icons/cg";
+import { BiErrorAlt, BiHappyBeaming } from 'react-icons/bi';
 
 import './RoomInfo.css';
 import axios from 'axios';
@@ -22,7 +23,6 @@ import axios from 'axios';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { BiErrorAlt, BiHappyBeaming } from 'react-icons/bi';
 import { toast, ToastContainer } from 'react-toastify';
 import { Redirect } from 'react-router-dom';
 
@@ -150,90 +150,91 @@ export default class RoomInfo extends Component {
     }
 
     addItemInShoppingCart(){
-        if(localStorage.getItem('itemsShoppingCart')==null){
-            axios.get('https://nativehotel2.herokuapp.com/api/room_types/' + this.state.roomType.idLP).then( res => {
-                if (res.data != null) {
-                    this.setState({
-                        slPhongTrong: res.data.slPhongTrong
-                    },()=>{
-                        if(this.state.startDate!=null&&this.state.giaLP!='Chưa có giá'&&this.state.slPhongTrong>0) {
-                            var sl = 1;
-                            var obj = {
-                                tenLP: this.state.roomType.tenLP,
-                                idLP: this.state.roomType.idLP,
-                                hinhAnh: this.state.hinhAnh[0],
-                                giaLP: this.state.giaLP,
-                            };
-                            console.log(obj);
+        // if(localStorage.getItem('itemsShoppingCart')==null){
+        axios.get('https://nativehotel2.herokuapp.com/api/room_types/' + this.state.roomType.idLP).then( res => {
+            if (res.data != null) {
+                this.setState({
+                    slPhongTrong: res.data.slPhongTrong
+                },()=>{
+                    if(this.state.startDate!=null&&this.state.giaLP!='Chưa có giá'&&this.state.slPhongTrong>0) {
+                        var sl = 1;
+                        var obj = {
+                            tenLP: this.state.roomType.tenLP,
+                            idLP: this.state.roomType.idLP,
+                            hinhAnh: this.state.hinhAnh[0],
+                            giaLP: this.state.giaLP,
+                        };
+                        console.log(obj);
 
-                            var date_cart = {
-                                startDate: format(this.state.startDate, 'yyyy/MM/dd'),
-                                endDate: format(this.state.endDate, 'yyyy/MM/dd'),
-                                days_diff: differenceInDays(this.state.endDate, this.state.startDate),
-                            }
-                            console.log(date_cart);
-                            this.props.onAddItemInShoppingCart(sl);
+                        var date_cart = {
+                            startDate: format(this.state.startDate, 'yyyy/MM/dd'),
+                            endDate: format(this.state.endDate, 'yyyy/MM/dd'),
+                            days_diff: differenceInDays(this.state.endDate, this.state.startDate),
+                        }
+                        console.log(date_cart);
 
-                            // Nếu KH vào lại trang -> giỏ vẫn còn
-                            localStorage.setItem('dateArriveCart', JSON.stringify(date_cart));
-                            
+                        // KH vào lại trang -> giỏ vẫn còn
+                        localStorage.setItem('dateArriveCart', JSON.stringify(date_cart));
+                        
+                        if(!localStorage.getItem('itemsShoppingCart')){
                             var arrItems = [];
                             arrItems.push(obj);
                             localStorage.setItem('itemsShoppingCart', JSON.stringify(arrItems));
                             localStorage.setItem('slItemsShoppingCart', JSON.stringify(sl));
-                            // Dành cho đặt nhiều phòng
-                            // else {
-                            //     var arrItems = JSON.parse(localStorage.getItem('itemsShoppingCart'));
-                            //     arrItems.push(obj);
-                            //     var sl = parseInt(localStorage.getItem('slItemsShoppingCart'),10) + sl;
-                            //     localStorage.setItem('itemsShoppingCart', JSON.stringify(arrItems));
-                            //     localStorage.setItem('slItemsShoppingCart', JSON.stringify(sl));
-                            // }
-                                
-                            // var items = JSON.parse(localStorage.getItem('itemsShoppingCart'));
-                            // var sl = parseInt(localStorage.getItem('slItemsShoppingCart'),10);
-                            // console.log('in LS: ', items, sl);  
-
-                            toast.success(<div style={{fontSize:'20px'}}><span style={{fontSize:'28px'}}><BiHappyBeaming /></span> Add to cart success</div>, {
-                                position: toast.POSITION.BOTTOM_RIGHT,
-                                autoClose: 4000
-                            });
-                            setTimeout(()=>{
-                                this.setState({ isGoToCartPage: !this.state.isGoToCartPage });
-                            }, 4500);
-                        } else if(this.state.giaLP=='Chưa có giá' || this.state.slPhongTrong<=0) {
-                            toast.error(<div style={{fontSize:'20px'}}><span style={{fontSize:'28px'}}><FaRegSadCry /></span>  Phiền bạn chọn phòng khác</div>, {
-                                position: toast.POSITION.BOTTOM_RIGHT,
-                                autoClose: 4000
-                            });
-
-                            var vh = 5;
-                            var y_late = (window.innerHeight*vh)/100;
-                            var y = $(".goToSlickSlider").position().top - y_late;
-                            // alert(y.top);
-
-                            window.scrollTo(0, y);
                         } else {
-                            toast.error(<div style={{fontSize:'20px'}}><BiErrorAlt/>  Bạn chưa chọn ngày</div>, {
-                                position: toast.POSITION.BOTTOM_RIGHT,
-                                autoClose: 4000
-                            });
+                            var arrItems = JSON.parse(localStorage.getItem('itemsShoppingCart'));
+                            arrItems.push(obj);
+                            var sl = parseInt(localStorage.getItem('slItemsShoppingCart'),10) + sl;
+                            localStorage.setItem('itemsShoppingCart', JSON.stringify(arrItems));
+                            localStorage.setItem('slItemsShoppingCart', JSON.stringify(sl));
                         }
-                    })
-                } 
-            });
-        } else {
-            toast.error(<div style={{fontSize:'20px'}}><span style={{fontSize:'28px'}}><FaRegSadCry /></span>  Bạn đã chọn phòng rồi!</div>, {
-                position: toast.POSITION.BOTTOM_RIGHT,
-                autoClose: 4000
-            });
-        }
+                            
+                        // Check data trong LS dạng console
+                        // var items = JSON.parse(localStorage.getItem('itemsShoppingCart'));
+                        // var sl = parseInt(localStorage.getItem('slItemsShoppingCart'),10);
+                        // console.log('in LS: ', items, sl);  
+
+                        this.props.onAddItemInShoppingCart(localStorage.getItem('slItemsShoppingCart'));
+                        toast.success(<div style={{fontSize:'20px'}}><span style={{fontSize:'28px'}}><BiHappyBeaming /></span> Add to cart success</div>, {
+                            position: toast.POSITION.BOTTOM_RIGHT,
+                            autoClose: 4000
+                        });
+                        setTimeout(()=>{
+                            this.setState({ isGoToCartPage: !this.state.isGoToCartPage });
+                        }, 4500);
+                    } else if(this.state.giaLP=='Chưa có giá' || this.state.slPhongTrong<=0) {
+                        toast.error(<div style={{fontSize:'20px'}}><span style={{fontSize:'28px'}}><FaRegSadCry /></span>  Phiền bạn chọn phòng khác</div>, {
+                            position: toast.POSITION.BOTTOM_RIGHT,
+                            autoClose: 4000
+                        });
+
+                        var vh = 5;
+                        var y_late = (window.innerHeight*vh)/100;
+                        var y = $(".goToSlickSlider").position().top - y_late;
+                        // alert(y.top);
+
+                        window.scrollTo(0, y);
+                    } else {
+                        toast.error(<div style={{fontSize:'20px'}}><BiErrorAlt/>  Bạn chưa chọn ngày</div>, {
+                            position: toast.POSITION.BOTTOM_RIGHT,
+                            autoClose: 4000
+                        });
+                    }
+                })
+            } 
+        });
+        // } else {
+        //     toast.error(<div style={{fontSize:'20px'}}><span style={{fontSize:'28px'}}><FaRegSadCry /></span>  Bạn đã chọn phòng rồi!</div>, {
+        //         position: toast.POSITION.BOTTOM_RIGHT,
+        //         autoClose: 4000
+        //     });
+        // }
     }
 
     render() {
         if(this.state.isGoToCartPage){
             return (
-                <Redirect to="/cart_page" />
+                <Redirect to="/your_basket" />
             );
         }
         console.warn('watch this room: ', this.state.idLP);

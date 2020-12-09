@@ -12,12 +12,13 @@ import {
 } from 'reactstrap';
 import NavbarTop from '../Navigation/NavbarTop/NavbarTop';
 import SidebarLeft from '../Navigation/Sidebar/SidebarLeft';
-import { ImCancelCircle } from "react-icons/im";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { AiFillCheckCircle } from "react-icons/ai";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { ImCancelCircle } from "react-icons/im";
+import { AiFillCheckCircle } from "react-icons/ai";
 
 export default class OwnAccountForm extends Component {
     constructor(props) {

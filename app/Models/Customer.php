@@ -11,8 +11,13 @@ class Customer extends Model
     protected $primaryKey = 'idKH';
     protected $fillable=[
         'tenKH', 
-        'soThe', 
-        'ngayHetHan'
+        'ngayHetHan',
+        'email',
+        'sdt',
+        'loaiThe',
+        'nganHang',
+        'tenThe',
+        'soThe'
     ];
     public function booking(){
         return $this->hasMany('App\Models\Booking','idKH','idKH');

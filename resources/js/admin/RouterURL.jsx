@@ -35,7 +35,6 @@ import OwnAccount from './components/myOwnAccount/OwnAccountForm';
 export default class RouterURL extends Component {
     render() {
         return (
-            <React.StrictMode>
             <Router>
                 <Suspense fallback={ <div>Loading...</div> }>
                     <div>
@@ -70,7 +69,6 @@ export default class RouterURL extends Component {
                     </div>
                 </Suspense>
             </Router>
-            </React.StrictMode>
         )
     }
 }

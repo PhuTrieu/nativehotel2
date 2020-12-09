@@ -94,7 +94,7 @@ var AddRates = /*#__PURE__*/function (_Component) {
     _this.state = {
       giaLP: '',
       timeApDung: '',
-      idLP: 2,
+      idLP: '',
       roomType: [],
       tooltipOpen: false
     };
@@ -156,12 +156,16 @@ var AddRates = /*#__PURE__*/function (_Component) {
       var _this3 = this;
 
       e.preventDefault();
-      var rates = {
-        giaLP: this.state.giaLP,
-        timeApDung: this.state.timeApDung,
-        idLP: this.state.idLP
-      };
-      rates.idLP = parseInt(rates.idLP);
+
+      if (this.state.idLP != '') {
+        var rates = {
+          giaLP: this.state.giaLP,
+          timeApDung: this.state.timeApDung,
+          idLP: this.state.idLP
+        };
+        rates.idLP = parseInt(rates.idLP);
+      }
+
       var Zoom = Object(react_toastify__WEBPACK_IMPORTED_MODULE_5__["cssTransition"])({
         enter: 'zoomIn',
         exit: 'zoomOut'

@@ -17,6 +17,7 @@ class BookingController extends Controller
         return Booking::all();
     }
 
+
     /**
      * Store a newly created resource in storage.
      *

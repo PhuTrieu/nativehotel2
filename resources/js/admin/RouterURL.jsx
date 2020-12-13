@@ -28,6 +28,8 @@ const RoomTypes = lazy(() => import("./components/RoomTypes/RoomTypes"));
 const RoomTypeForm = lazy(() => import('./components/RoomTypes/FormRoomType/RoomTypeForm'));
 const AddRoomType = lazy(() => import('./components/RoomTypes/AddRoomType/AddRoomType'));
 
+import EmptyRoom from './components/EmptyRoom/EmptyRoom';
+
 import Login from './components/Login/Login';
 
 import OwnAccount from './components/myOwnAccount/OwnAccountForm';
@@ -66,6 +68,8 @@ export default class RouterURL extends Component {
                         <Route exact path="/admin/admin_accounts" component={ AdminAccounts }/>
                         <Route exact path="/admin/form_admin_account/:id" component={ AdminAccountForm }/>
                         <Route exact path="/admin/add_admin_account" component={ AddAdminAccount }/>
+
+                        <Route exact patch="/admin/empty_room" component={ EmptyRoom }/>
                     </div>
                 </Suspense>
             </Router>

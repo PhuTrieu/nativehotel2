@@ -36,6 +36,9 @@ Route::post('admin_login','App\Http\Controllers\AdminAccountController@login');
 Route::post('exist_mail','App\Http\Controllers\SendMailController@checkExistMail');
 Route::post('send_mail','App\Http\Controllers\SendMailController@sendMail');
 
+
+Route::post('empty_room','App\Http\Controllers\RoomTypeController@searchEmptyRoom');
+
 // Route::get('register','RegisterController@index');
 // Route::post('register','RegisterController@store');
 // Route::put('register/{id}','RegisterController@update');
